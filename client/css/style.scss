@@ -1,0 +1,70 @@
+$primary: #0c0c3c;
+$black: #000;
+$white: #fff;
+
+$base-font: 24px;
+
+:root {
+  font-size: $base-font;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Exo 2', sans-serif;
+  min-height: 100%;
+}
+
+// MAIN
+
+.header {
+  background-color: $primary;
+  color: $white;
+  padding: .5rem;
+  text-align: center;
+  h1 {
+    font-size: 2.5rem;
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+.content {
+  flex: 1;
+  padding: .75rem;
+}
+
+.footer {
+  background-color: $primary;
+  color: $white;
+  font-size: .9rem;
+  padding: .5em;
+  text-align: center;
+}
+
+// CHAT
+
+.chatroom {
+  height: calc(100vh - 7.5rem);
+  overflow: auto;
+  position: relative;
+  form {
+    bottom: 0;
+    position: absolute;
+    input[type="text"] {
+      width: calc(100vw - 6.1rem);
+    }
+    input[type="submit"] {
+      width: 4rem;
+    }
+  }
+  ul {
+    font-size: 1rem;
+    height: calc(100vh - 9.5rem);
+    list-style-type: none;
+    margin: 0;
+    overflow-y: scroll;
+    padding: 0.25em;
+  }
+}

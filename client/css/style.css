@@ -1,0 +1,51 @@
+:root {
+  font-size: 24px;
+  height: 100%; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Exo 2', sans-serif;
+  min-height: 100%; }
+
+.header {
+  background-color: #0c0c3c;
+  color: #fff;
+  padding: .5rem;
+  text-align: center; }
+  .header h1 {
+    font-size: 2.5rem;
+    font-style: italic;
+    margin: 0; }
+
+.content {
+  flex: 1;
+  padding: .75rem; }
+
+.footer {
+  background-color: #0c0c3c;
+  color: #fff;
+  font-size: .9rem;
+  padding: .5em;
+  text-align: center; }
+
+.chatroom {
+  height: calc(100vh - 7.5rem);
+  overflow: auto;
+  position: relative; }
+  .chatroom form {
+    bottom: 0;
+    position: absolute; }
+    .chatroom form input[type="text"] {
+      width: calc(100vw - 6.1rem); }
+    .chatroom form input[type="submit"] {
+      width: 4rem; }
+  .chatroom ul {
+    font-size: 1rem;
+    height: calc(100vh - 9.5rem);
+    list-style-type: none;
+    margin: 0;
+    overflow-y: scroll;
+    padding: 0.25em; }
+
+/*# sourceMappingURL=style.css.map */
