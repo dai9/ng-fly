@@ -5,8 +5,13 @@ $white: #fff;
 $base-font: 24px;
 
 :root {
+  box-sizing: border-box;
   font-size: $base-font;
   height: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 body {
@@ -27,6 +32,9 @@ body {
     font-size: 2.5rem;
     font-style: italic;
     margin: 0;
+    img {
+      width: 2em;
+    }
   }
 }
 
@@ -47,21 +55,24 @@ body {
 
 .chatroom {
   height: calc(100vh - 7.5rem);
-  overflow: auto;
   position: relative;
   form {
     bottom: 0;
     position: absolute;
     input[type="text"] {
-      width: calc(100vw - 6.1rem);
+      background-color: lighten($primary, 60%);
+      width: calc(100vw - 5.9rem);
     }
     input[type="submit"] {
+      border-radius: 0.5em;
+      background-color: $primary;
+      color: $white;
       width: 4rem;
     }
   }
   ul {
     font-size: 1rem;
-    height: calc(100vh - 9.5rem);
+    height: calc(100vh - 9.3rem);
     list-style-type: none;
     margin: 0;
     overflow-y: scroll;

@@ -6,26 +6,21 @@
     <base href="/">
     <title>ngFly</title>
     <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
-    <!-- DEVELOPMENT -->
-    <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css">
-    <!-- DEPLOYMENT -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" /> -->
+    <link rel="stylesheet" href="../libs/normalize-css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <div ng-include="'js/templates/header.html'"></div>
     <div ui-view class="content"></div>
     <div ng-include="'js/templates/footer.html'"></div>
-    <!-- DEVELOPMENT -->
-    <script type="text/javascript" src="../bower_components/angular/angular.js"></script>
-    <script type="text/javascript" src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <!-- DEPLOYMENT -->
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script> -->
-    <script src="js/app.js" type="text/javascript"></script>
-    <script src="js/controllers.js" type="text/javascript"></script>
-    <script src="js/directives.js" type="text/javascript"></script>
-    <script src="js/filters.js" type="text/javascript"></script>
-    <script src="js/services.js" type="text/javascript"></script>
+
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="../libs/angular/angular.js"></script>
+    <script src="../libs/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../libs/angular-socket-io/socket.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services/chatservice.js"></script>
+    <script src="js/services/chatsocket.js"></script>
+    <script src="js/controllers/chatcontroller.js"></script>
   </body>
 </html>

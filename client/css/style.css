@@ -1,6 +1,10 @@
 :root {
+  box-sizing: border-box;
   font-size: 24px;
   height: 100%; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
 
 body {
   display: flex;
@@ -17,6 +21,8 @@ body {
     font-size: 2.5rem;
     font-style: italic;
     margin: 0; }
+    .header h1 img {
+      width: 2em; }
 
 .content {
   flex: 1;
@@ -31,18 +37,21 @@ body {
 
 .chatroom {
   height: calc(100vh - 7.5rem);
-  overflow: auto;
   position: relative; }
   .chatroom form {
     bottom: 0;
     position: absolute; }
     .chatroom form input[type="text"] {
-      width: calc(100vw - 6.1rem); }
+      background-color: #9191e9;
+      width: calc(100vw - 5.9rem); }
     .chatroom form input[type="submit"] {
+      border-radius: 0.5em;
+      background-color: #0c0c3c;
+      color: #fff;
       width: 4rem; }
   .chatroom ul {
     font-size: 1rem;
-    height: calc(100vh - 9.5rem);
+    height: calc(100vh - 9.3rem);
     list-style-type: none;
     margin: 0;
     overflow-y: scroll;
