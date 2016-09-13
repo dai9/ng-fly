@@ -1,0 +1,23 @@
+{
+  "name": "capstone",
+  "description": "",
+  "main": "server/app.js",
+  "authors": [
+    "Dai Nguyen <dainguyen@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/dnguyen87/capstone",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "^0.3.1",
+    "angular": "^1.5.8",
+    "normalize-css": "^4.2.0"
+  }
+}

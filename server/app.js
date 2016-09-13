@@ -13,6 +13,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/bower_components',express.static(path.join(__dirname, '../bower_components')));
 app.use('/css',express.static(path.join(__dirname, '../client/css')));
 app.use('/js',express.static(path.join(__dirname, '../client/js')));
 app.use('/templates',express.static(path.join(__dirname, '../client/js/templates')));
