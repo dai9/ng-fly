@@ -1,4 +1,4 @@
-var app = angular.module('helloApp', ['ui.router']);
+var app = angular.module('ngFlyApp', ['ui.router']);
 
 app.config(function($stateProvider, $locationProvider) {
   $stateProvider
