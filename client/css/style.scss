@@ -1,4 +1,5 @@
 $primary: #0c0c3c;
+$secondary: #56565a;
 $black: #000;
 $white: #fff;
 
@@ -28,17 +29,28 @@ body {
   color: $white;
   padding: .5rem;
   text-align: center;
+  transition: height 1s ease;
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-style: italic;
     margin: 0;
-    img {
-      width: 2em;
-    }
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
   }
 }
 
+.menu-btn {
+  cursor: pointer;
+  font-size: 1.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+}
+
 .content {
+  background-color: $secondary;
   flex: 1;
   padding: .75rem;
 }
@@ -47,21 +59,21 @@ body {
   background-color: $primary;
   color: $white;
   font-size: .9rem;
-  padding: .5em;
+  padding: .45em;
   text-align: center;
 }
 
 // CHAT
 
 .chatroom {
-  height: calc(100vh - 7.5rem);
+  height: calc(100vh - 7rem);
   position: relative;
   form {
     bottom: 0;
     position: absolute;
     input[type="text"] {
       background-color: lighten($primary, 60%);
-      width: calc(100vw - 5.9rem);
+      width: calc(100vw - 5.8rem);
     }
     input[type="submit"] {
       border-radius: 0.5em;
@@ -72,7 +84,7 @@ body {
   }
   ul {
     font-size: 1rem;
-    height: calc(100vh - 9.3rem);
+    height: calc(100vh - 9rem);
     list-style-type: none;
     margin: 0;
     overflow-y: scroll;

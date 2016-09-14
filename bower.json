@@ -1,17 +1,17 @@
 {
-  "name": "capstone",
+  "name": "ng-fly",
   "description": "",
   "main": "server/app.js",
   "authors": [
     "Dai Nguyen <dainguyen@gmail.com>"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/dnguyen87/capstone",
+  "homepage": "https://github.com/dnguyen87/ng-fly",
   "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
+    "libs",
     "test",
     "tests"
   ],
@@ -19,6 +19,7 @@
     "angular-ui-router": "^0.3.1",
     "angular": "^1.5.8",
     "normalize-css": "^4.2.0",
-    "angular-socket-io": "^0.7.0"
+    "angular-socket-io": "^0.7.0",
+    "angular-scroll-glue": "^2.0.7"
   }
 }
