@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var drone = require('./models/drone');
 
 var app = express();
 var server = require('http').Server(app);
@@ -11,17 +12,22 @@ var io = require('socket.io')(server);
 app.io = io;
 
 io.on('connection', function(socket) {
-  console.log(`A user with socket ${socket.id} has connected.`);
+  console.log(`${socket.id} has connected.`);
   socket.on('message', function(message) {
+    let command = message.body.toLowerCase();
+    drone.chat(command);
     io.emit('message', message);
   });
+  socket.on('command', function(command) {
+    drone.gamepad(command);
+  });
   socket.on('disconnect', function() {
-    console.log(`A user with socket ${socket.id} has disconnected.`);
+    console.log(`${socket.id} has disconnected.`);
   });
 });
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

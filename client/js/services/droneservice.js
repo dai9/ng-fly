@@ -1,5 +1,5 @@
 angular.module('ngFlyApp')
-.service('ChatService', ['socket', function(socket) {
+.service('DroneService', ['socket', function(socket) {
   function generateName(length = 4) {
     let username = 'Guest#';
     for (let i = 0; i < length; i++) {
@@ -14,6 +14,9 @@ angular.module('ngFlyApp')
     return messages;
   };
 
+  this.command = function(command) {
+    socket.emit('command', command);
+  };
   this.send = function(username, body) {
     socket.emit('message', {
       username: username,

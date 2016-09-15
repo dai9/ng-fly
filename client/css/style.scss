@@ -1,5 +1,6 @@
 $primary: #0c0c3c;
-$secondary: #56565a;
+$secondary: #f8fbfd;
+$tertiary: #7d7d7d;
 $black: #000;
 $white: #fff;
 
@@ -9,6 +10,7 @@ $base-font: 24px;
   box-sizing: border-box;
   font-size: $base-font;
   height: 100%;
+  user-select: none;
 }
 
 *, *:before, *:after {
@@ -22,14 +24,27 @@ body {
   min-height: 100%;
 }
 
-// MAIN
+.btn {
+  cursor: pointer;
+}
+
+// HEADER
 
 .header {
   background-color: $primary;
   color: $white;
+  height: 3.5rem;
+  left: 0;
+  overflow-y: hidden;
   padding: .5rem;
-  text-align: center;
-  transition: height 1s ease;
+  position: absolute;
+  right: 0;
+  transition: height 300ms ease-in-out;
+  z-index: 1;
+  a {
+    color: $white;
+    text-decoration: none;
+  }
   h1 {
     font-size: 2rem;
     font-style: italic;
@@ -38,22 +53,27 @@ body {
   ul {
     list-style-type: none;
     padding: 0;
+    text-align:  center;
   }
 }
 
-.menu-btn {
-  cursor: pointer;
+.btn.menu {
   font-size: 1.5rem;
   position: absolute;
   right: 1rem;
   top: 0.5rem;
 }
 
+// CONTENT
+
 .content {
   background-color: $secondary;
   flex: 1;
   padding: .75rem;
+  padding-top: 4rem;
 }
+
+// FOOTER
 
 .footer {
   background-color: $primary;
@@ -61,6 +81,14 @@ body {
   font-size: .9rem;
   padding: .45em;
   text-align: center;
+  z-index: 1;
+  a {
+    color: $white;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 // CHAT
@@ -89,5 +117,90 @@ body {
     margin: 0;
     overflow-y: scroll;
     padding: 0.25em;
+  }
+}
+
+// GAMEPAD
+
+.gamepad {
+  position: relative;
+  .btn {
+    background-color: $primary;
+    border-radius: 0.3em;
+    border-bottom: 0.15em solid $tertiary;
+    color: $white;
+    font: 1rem;
+    padding: 0.2em;
+    &:active {
+      border-bottom: 0.1em solid $tertiary;
+      transform: translateY(0.05em);
+    }
+    &.l, &.r {
+      padding-left: 1.5em;
+      padding-right: 1.5em;
+    }
+    &.up, &.down, &.x, &.a, &.b, &.y {
+      padding-left: 0.4em;
+      padding-right: 0.4em;
+    }
+  }
+  .triggers {
+    display: flex;
+    justify-content: space-between;
+  }
+  .mainpad {
+    display: flex;
+    height: calc(100vh - 9rem);
+    justify-content: space-around;
+  }
+  .dpad {
+    position: relative;
+    .btn {
+      position: absolute;
+    }
+    .up {
+      bottom: 7em;
+      left: 2em;
+    }
+    .right {
+      bottom: 5em;
+      left: 4em;
+    }
+    .down {
+      bottom: 3em;
+      left: 2em;
+    }
+    .left {
+      bottom: 5em;
+    }
+  }
+  .options {
+    display: flex;
+    .btn {
+      align-self: flex-end;
+      margin: 0.5em;
+    }
+  }
+  .commands {
+    position: relative;
+    .btn {
+      position: absolute;
+    }
+    .x {
+      bottom: 7em;
+      right: 2em;
+    }
+    .a {
+      bottom: 5em;
+      right: 0;
+    }
+    .b {
+      bottom: 3em;
+      right: 2em;
+    }
+    .y {
+      bottom: 5em;
+      right: 4em;
+    }
   }
 }

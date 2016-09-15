@@ -43,3 +43,4 @@ jspm_packages
 libs
 .sass-cache
 style.css.map
+gulpfile.js

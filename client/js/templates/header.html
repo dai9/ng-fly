@@ -1,11 +1,9 @@
 <nav class="header">
-  <div class="menu-btn" ng-click="toggleMenu()">
-    &#9776;
-  </div>
+  <div menu class="btn menu"></div>
   <h1>ngFly</h1>
-  <ul ng-show="view.showMenu">
-    <li>Option 1</li>
-    <li>Option 2</li>
-    <li>Option 3</li>
+  <ul class="nav-items hidden">
+    <li><a ui-sref="home">Chatroom</a></li>
+    <li><a ui-sref="gamepad">Gamepad</a></li>
+    <li><a ui-sref="keyboard">Keyboard</a></li>
   </ul>
 </nav>
