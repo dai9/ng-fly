@@ -114,6 +114,10 @@ body {
 }
 
 .gamepad {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
   position: relative;
 }
 .gamepad .btn {
@@ -156,19 +160,20 @@ body {
   position: absolute;
 }
 .gamepad .dpad .up {
-  bottom: 7em;
-  left: 2em;
+  bottom: 4em;
+  left: 0;
 }
 .gamepad .dpad .right {
-  bottom: 5em;
-  left: 4em;
-}
-.gamepad .dpad .down {
-  bottom: 3em;
+  bottom: 2em;
   left: 2em;
 }
+.gamepad .dpad .down {
+  bottom: 0;
+  left: 0;
+}
 .gamepad .dpad .left {
-  bottom: 5em;
+  left: -2em;
+  bottom: 2em;
 }
 .gamepad .options {
   display: -ms-flexbox;
@@ -186,18 +191,92 @@ body {
   position: absolute;
 }
 .gamepad .commands .x {
-  bottom: 7em;
-  right: 2em;
-}
-.gamepad .commands .a {
-  bottom: 5em;
+  bottom: 4em;
   right: 0;
 }
+.gamepad .commands .a {
+  bottom: 2em;
+  right: -2em;
+}
 .gamepad .commands .b {
-  bottom: 3em;
-  right: 2em;
+  bottom: 0;
+  right: 0;
 }
 .gamepad .commands .y {
-  bottom: 5em;
-  right: 4em;
+  bottom: 2em;
+  right: 2em;
+}
+
+.keyboard {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+.keyboard .btn {
+  border-bottom: 0.2em solid #7d7d7d;
+  border-left: 0.2em solid #7d7d7d;
+  border-radius: 0.2em;
+  font-size: 1rem;
+  height: 1.5em;
+  position: absolute;
+  text-align: center;
+  width: 1.5em;
+}
+.keyboard .btn:active {
+  border-bottom: 0.1em solid #7d7d7d;
+  border-left: 0.1em solid #7d7d7d;
+  transform: translateY(0.05em);
+}
+.keyboard .wasd {
+  position: relative;
+}
+.keyboard .wasd .w {
+  left: .1em;
+}
+.keyboard .wasd .a {
+  left: -1.5em;
+  top: 1.6em;
+}
+.keyboard .wasd .s {
+  left: .1em;
+  top: 1.6em;
+}
+.keyboard .wasd .d {
+  left: 1.7em;
+  top: 1.6em;
+}
+.keyboard .wasd .q {
+  left: -1.5em;
+}
+.keyboard .wasd .e {
+  left: 1.7em;
+}
+.keyboard .uhjk {
+  position: relative;
+}
+.keyboard .uhjk .u {
+  left: .1em;
+}
+.keyboard .uhjk .h {
+  left: -1.5em;
+  top: 1.6em;
+}
+.keyboard .uhjk .j {
+  left: .1em;
+  top: 1.6em;
+}
+.keyboard .uhjk .k {
+  left: 1.7em;
+  top: 1.6em;
+}
+.keyboard .entershift {
+  position: relative;
+}
+.keyboard .entershift .enter {
+  width: 3em;
+}
+.keyboard .entershift .shift {
+  top: 1.6em;
+  width: 3em;
 }

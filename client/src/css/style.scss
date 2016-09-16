@@ -125,6 +125,8 @@ body {
 // GAMEPAD
 
 .gamepad {
+  display: flex;
+  flex-direction: column;
   position: relative;
   .btn {
     background-color: $primary;
@@ -161,19 +163,20 @@ body {
       position: absolute;
     }
     .up {
-      bottom: 7em;
-      left: 2em;
+      bottom: 4em;
+      left: 0;
     }
     .right {
-      bottom: 5em;
-      left: 4em;
-    }
-    .down {
-      bottom: 3em;
+      bottom: 2em;
       left: 2em;
     }
+    .down {
+      bottom: 0;
+      left: 0;
+    }
     .left {
-      bottom: 5em;
+      left: -2em;
+      bottom: 2em;
     }
   }
   .options {
@@ -189,20 +192,93 @@ body {
       position: absolute;
     }
     .x {
-      bottom: 7em;
-      right: 2em;
-    }
-    .a {
-      bottom: 5em;
+      bottom: 4em;
       right: 0;
     }
+    .a {
+      bottom: 2em;
+      right: -2em;
+    }
     .b {
-      bottom: 3em;
-      right: 2em;
+      bottom: 0;
+      right: 0;
     }
     .y {
-      bottom: 5em;
-      right: 4em;
+      bottom: 2em;
+      right: 2em;
+    }
+  }
+}
+
+// KEYBOARD
+.keyboard {
+  display: flex;
+  justify-content: space-around;
+  .btn {
+    border-bottom: 0.20em solid $tertiary;
+    border-left: 0.20em solid $tertiary;
+    border-radius: 0.2em;
+    font-size: 1rem;
+    height: 1.5em;
+    position: absolute;
+    text-align: center;
+    width: 1.5em;
+    &:active {
+      border-bottom: 0.1em solid $tertiary;
+      border-left: 0.1em solid $tertiary;
+      transform: translateY(0.05em);
+    }
+  }
+  .wasd {
+    position: relative;
+    .w {
+      left: .1em;
+    }
+    .a {
+      left: -1.5em;
+      top: 1.6em;
+    }
+    .s {
+      left: .1em;
+      top: 1.6em;
+    }
+    .d {
+      left: 1.7em;
+      top: 1.6em;
+    }
+    .q {
+      left: -1.5em;
+    }
+    .e {
+      left: 1.7em;
+    }
+  }
+  .uhjk {
+    position: relative;
+    .u {
+      left: .1em;
+    }
+    .h {
+      left: -1.5em;
+      top: 1.6em;
+    }
+    .j {
+      left: .1em;
+      top: 1.6em;
+    }
+    .k {
+      left: 1.7em;
+      top: 1.6em;
+    }
+  }
+  .entershift {
+    position: relative;
+    .enter {
+      width: 3em;
+    }
+    .shift {
+      top: 1.6em;
+      width: 3em;
     }
   }
 }
