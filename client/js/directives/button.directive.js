@@ -5,9 +5,9 @@
     .module('ngFlyApp')
     .directive('btn', btn);
 
-  btn.$inject = ['$interval', '$timeout', 'DroneService'];
+  btn.$inject = ['$interval', '$timeout', 'droneService'];
 
-  function btn($interval, $timeout, DroneService) {
+  function btn($interval, $timeout, droneService) {
     return {
       restrict: 'E',
       link: linkFunc
@@ -20,16 +20,16 @@
 
       function mouseDown(e) {
         if (e.which === 1) {
-          DroneService.command(buttonValue);
+          droneService.command(buttonValue);
           scope.promise = $interval(function() {
-            DroneService.command(buttonValue);
+            droneService.command(buttonValue);
           }, 300);
         }
       }
 
       function mouseUp() {
         if (buttonValue !== 'Select' && buttonValue !== 'Start' && buttonValue !== 'B') {
-          DroneService.command('B');
+          droneService.command('B');
         }
         $interval.cancel(scope.promise);
       }
@@ -41,7 +41,7 @@
 //   scope.longPress = true;
 //   $timeout(function() {
 //     if (scope.longPress) {
-//       DroneService.command(buttonValue);
+//       droneService.command(buttonValue);
 //     }
 //   }, 300);
 // });

@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('ngFlyApp', ['ui.router', 'btford.socket-io', 'luegg.directives', 'ngAnimate'])
-    .config(config);
+    .module('ngFlyApp')
+    .config(route);
 
-  config.$inject = ['$stateProvider', '$locationProvider'];
+  route.$inject = ['$stateProvider', '$locationProvider'];
 
-  function config($stateProvider, $locationProvider) {
+  function route($stateProvider, $locationProvider) {
     $stateProvider
       .state('home', {
         url: '/',

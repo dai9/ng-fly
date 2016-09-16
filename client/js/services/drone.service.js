@@ -3,11 +3,11 @@
 
   angular
     .module('ngFlyApp')
-    .factory('DroneService', DroneService);
+    .factory('droneService', droneService);
 
-  DroneService.$inject = ['socket'];
+  droneService.$inject = ['socket'];
 
-  function DroneService(socket) {
+  function droneService(socket) {
     let username = generateName();
     let messagesList = [];
     let service = {
