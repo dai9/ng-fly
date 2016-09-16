@@ -36,16 +36,3 @@
     }
   }
 })();
-
-// elem.bind('touchstart', function() {
-//   scope.longPress = true;
-//   $timeout(function() {
-//     if (scope.longPress) {
-//       droneService.command(buttonValue);
-//     }
-//   }, 300);
-// });
-//
-// elem.bind('touchend', function() {
-//   scope.longPress = false;
-// });

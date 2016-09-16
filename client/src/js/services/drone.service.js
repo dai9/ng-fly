@@ -14,7 +14,7 @@
       username: username,
       messages: messages,
       command: command,
-      send: send,
+      send: send
     };
 
     socket.on('message', function(message) {

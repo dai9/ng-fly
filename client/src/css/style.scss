@@ -3,7 +3,6 @@ $secondary: #f8fbfd;
 $tertiary: #7d7d7d;
 $black: #000;
 $white: #fff;
-
 $base-font: 24px;
 
 :root {
@@ -65,19 +64,6 @@ body {
   position: absolute;
   right: 1rem;
   top: 0.5rem;
-}
-
-.nav-items.ng-hide-add {
-  animation: 0.5s slideUp ease;
-}
-
-@keyframes slideUp {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }
 
 // CONTENT

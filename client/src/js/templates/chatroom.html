@@ -1,0 +1,12 @@
+<div class="chatroom">
+  <ul scroll-glue>
+    <li>Welcome to the ngFly chatroom!</li>
+    <li ng-repeat="message in vm.messages"><strong>{{message.username}}: </strong>{{message.body}}</li>
+  </ul>
+  <form name="messageform" novalidate ng-submit="messageform.$valid && vm.sendMessage(vm.username, vm.message)">
+    <input type="text" placeholder="Message"
+      ng-model="vm.message"
+      required>
+    <input type="submit" value="Send">
+  </form>
+</div>
