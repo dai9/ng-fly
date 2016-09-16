@@ -33,7 +33,7 @@ body {
 .header {
   background-color: $primary;
   color: $white;
-  height: 3.5rem;
+  height: 3.5em;
   left: 0;
   overflow-y: hidden;
   padding: .5rem;
@@ -41,6 +41,9 @@ body {
   right: 0;
   transition: height 300ms ease-in-out;
   z-index: 1;
+  &.show {
+    height: 8em;
+  }
   a {
     color: $white;
     text-decoration: none;
@@ -62,6 +65,19 @@ body {
   position: absolute;
   right: 1rem;
   top: 0.5rem;
+}
+
+.nav-items.ng-hide-add {
+  animation: 0.5s slideUp ease;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 // CONTENT

@@ -25,40 +25,41 @@ Drone.prototype.chat = function(command) {
 };
 
 Drone.prototype.gamepad = function(command) {
-  switch(command) {
-    case 'L':
-      this.drone.left(0.1);
-      break;
-    case 'R':
-      this.drone.right(0.1);
-      break;
-    case '↑':
-      this.drone.up(0.1);
-      break;
-    case '→':
-      this.drone.clockwise(0.1);
-      break;
-    case '↓':
-    this.drone.down(0.1);
-      break;
-    case '←':
-      this.drone.counterClockwise(0.1);
-      break;
-    case 'A':
-      this.drone.front(0.1);
-      break;
-    case 'B':
-      this.drone.stop();
-      break;
-    case 'Start':
-      this.drone.takeoff(() => {
-        this.drone.stop();
-      });
-      break;
-    case 'Select':
-      this.drone.land();
-      break;
-  }
+  console.log(command);
+  // switch(command) {
+  //   case 'L':
+  //     this.drone.left(0.1);
+  //     break;
+  //   case 'R':
+  //     this.drone.right(0.1);
+  //     break;
+  //   case '↑':
+  //     this.drone.up(0.1);
+  //     break;
+  //   case '→':
+  //     this.drone.clockwise(0.1);
+  //     break;
+  //   case '↓':
+  //   this.drone.down(0.1);
+  //     break;
+  //   case '←':
+  //     this.drone.counterClockwise(0.1);
+  //     break;
+  //   case 'A':
+  //     this.drone.front(0.1);
+  //     break;
+  //   case 'B':
+  //     this.drone.stop();
+  //     break;
+  //   case 'Start':
+  //     this.drone.takeoff(() => {
+  //       this.drone.stop();
+  //     });
+  //     break;
+  //   case 'Select':
+  //     this.drone.land();
+  //     break;
+  // }
 };
 
 var parrot = new Drone(arDrone);
