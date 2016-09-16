@@ -32,11 +32,10 @@ io.on('connection', function(socket) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/dist',express.static(path.join(__dirname, '../client/dist')));
 app.use('/libs',express.static(path.join(__dirname, '../libs')));
-app.use('/css',express.static(path.join(__dirname, '../client/css')));
-app.use('/img',express.static(path.join(__dirname, '../client/img')));
-app.use('/js',express.static(path.join(__dirname, '../client/js')));
-app.use('/templates',express.static(path.join(__dirname, '../client/js/templates')));
+app.use('/js',express.static(path.join(__dirname, '../client/src/js')));
+app.use('/templates',express.static(path.join(__dirname, '../client/src/js/templates')));
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
