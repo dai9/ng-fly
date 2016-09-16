@@ -223,7 +223,7 @@ body {
   text-align: center;
   width: 1.5em;
 }
-.keyboard .btn:active {
+.keyboard .btn.active {
   border-bottom: 0.1em solid #7d7d7d;
   border-left: 0.1em solid #7d7d7d;
   transform: translateY(0.05em);

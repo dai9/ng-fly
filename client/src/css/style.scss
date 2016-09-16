@@ -223,7 +223,7 @@ body {
     position: absolute;
     text-align: center;
     width: 1.5em;
-    &:active {
+    &.active {
       border-bottom: 0.1em solid $tertiary;
       border-left: 0.1em solid $tertiary;
       transform: translateY(0.05em);

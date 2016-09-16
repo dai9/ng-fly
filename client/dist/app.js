@@ -33,43 +33,6 @@
 (function () {
   'use strict';
 
-  angular.module('ngFlyApp').directive('btn', btn);
-
-  btn.$inject = ['$interval', '$timeout', 'droneService'];
-
-  function btn($interval, $timeout, droneService) {
-    return {
-      restrict: 'E',
-      link: linkFunc
-    };
-
-    function linkFunc(scope, elem, attrs) {
-      var buttonValue = elem[0].innerHTML;
-      elem.bind('mousedown', mouseDown);
-      elem.bind('mouseup', mouseUp);
-
-      function mouseDown(e) {
-        if (e.which === 1) {
-          droneService.command(buttonValue);
-          scope.promise = $interval(function () {
-            droneService.command(buttonValue);
-          }, 300);
-        }
-      }
-
-      function mouseUp() {
-        if (buttonValue !== 'Select' && buttonValue !== 'Start' && buttonValue !== 'B') {
-          droneService.command('B');
-        }
-        $interval.cancel(scope.promise);
-      }
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
   angular.module('ngFlyApp').controller('ChatController', ChatController);
 
   ChatController.$inject = ['droneService'];
@@ -84,6 +47,117 @@
     function sendMessage(username, body) {
       droneService.send(username, body);
       vm.message = '';
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').directive('btn', btn);
+
+  btn.$inject = ['$interval', '$timeout', 'droneService'];
+
+  function btn($interval, $timeout, droneService) {
+    return {
+      restrict: 'E',
+      link: linkFunc
+    };
+
+    function linkFunc(scope, elem, attrs) {
+      scope.convert = {
+        'L': 'left',
+        'R': 'right',
+        '↑': 'up',
+        '→': 'turnRight',
+        '↓': 'down',
+        '←': 'turnLeft',
+        'X': 'flip',
+        'A': 'front',
+        'B': 'back',
+        'Y': 'stop',
+        'Select': 'land',
+        'Start': 'takeoff'
+      };
+      var command = elem[0].innerHTML;
+      elem.bind('mousedown', mouseDown);
+      elem.bind('mouseup', mouseUp);
+
+      function mouseDown(e) {
+        if (e.which === 1) {
+          droneService.command(scope.convert[command]);
+          scope.repeat = $interval(function () {
+            droneService.command(scope.convert[command]);
+          }, 300);
+        }
+      }
+
+      function mouseUp() {
+        droneService.command('stop');
+        $interval.cancel(scope.repeat);
+      }
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').directive('keyboard', keyboard);
+
+  keyboard.$inject = ['$document', 'droneService'];
+
+  function keyboard($document, droneService) {
+    return {
+      restrict: 'E',
+      link: linkFunc
+    };
+
+    function linkFunc(scope, elem, attrs) {
+      scope.keycodes = {
+        81: 'q',
+        87: 'w',
+        69: 'e',
+        65: 'a',
+        83: 's',
+        68: 'd',
+        85: 'u',
+        72: 'h',
+        74: 'j',
+        75: 'k',
+        13: 'enter',
+        16: 'shift'
+      };
+      scope.convert = {
+        q: 'left',
+        w: 'up',
+        e: 'right',
+        a: 'turnLeft',
+        s: 'down',
+        d: 'turnRight',
+        u: 'flip',
+        h: 'stop',
+        j: 'back',
+        k: 'front',
+        enter: 'takeoff',
+        shift: 'land'
+      };
+      $document.bind('keydown', function (e) {
+        var command = scope.keycodes[e.which];
+        if (command) {
+          var key = document.getElementsByClassName(command)[0];
+          key.classList.add('active');
+          droneService.command(scope.convert[command]);
+        }
+      });
+      $document.bind('keyup', function (e) {
+        var command = scope.keycodes[e.which];
+        if (command) {
+          droneService.command('stop');
+          var key = document.getElementsByClassName(command)[0];
+          key.classList.remove('active');
+        }
+      });
     }
   }
 })();
