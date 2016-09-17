@@ -28,26 +28,13 @@
         13: 'enter',
         16: 'shift'
       };
-      scope.convert = {
-        q: 'left',
-        w: 'up',
-        e: 'right',
-        a: 'turnLeft',
-        s: 'down',
-        d: 'turnRight',
-        u: 'flip',
-        h: 'stop',
-        j: 'back',
-        k: 'front',
-        enter: 'takeoff',
-        shift: 'land'
-      };
+      let keyboard = document.getElementsByClassName('keyboard')[0];
       $document.bind('keydown', function(e) {
         let command = scope.keycodes[e.which];
         if (command) {
           let key = document.getElementsByClassName(command)[0];
           key.classList.add('active');
-          droneService.command(scope.convert[command]);
+          droneService.command(droneService.convert[command]);
         }
       });
       $document.bind('keyup', function(e) {

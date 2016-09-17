@@ -22,6 +22,10 @@
       .state('keyboard', {
         url: '/keyboard',
         templateUrl: 'templates/keyboard.html'
+      })
+      .state('stream', {
+        url: '/stream',
+        templateUrl: 'templates/stream.html'
       });
     $locationProvider.html5Mode(true);
   }

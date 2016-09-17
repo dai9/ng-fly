@@ -25,29 +25,11 @@
     }).state('keyboard', {
       url: '/keyboard',
       templateUrl: 'templates/keyboard.html'
+    }).state('stream', {
+      url: '/stream',
+      templateUrl: 'templates/stream.html'
     });
     $locationProvider.html5Mode(true);
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('ChatController', ChatController);
-
-  ChatController.$inject = ['droneService'];
-
-  function ChatController(droneService) {
-    var vm = this;
-    vm.username = droneService.username;
-    vm.message = '';
-    vm.messages = droneService.messages();
-    vm.sendMessage = sendMessage;
-
-    function sendMessage(username, body) {
-      droneService.send(username, body);
-      vm.message = '';
-    }
   }
 })();
 
@@ -65,29 +47,16 @@
     };
 
     function linkFunc(scope, elem, attrs) {
-      scope.convert = {
-        'L': 'left',
-        'R': 'right',
-        '↑': 'up',
-        '→': 'turnRight',
-        '↓': 'down',
-        '←': 'turnLeft',
-        'X': 'flip',
-        'A': 'front',
-        'B': 'back',
-        'Y': 'stop',
-        'Select': 'land',
-        'Start': 'takeoff'
-      };
+
       var command = elem[0].innerHTML;
       elem.bind('mousedown', mouseDown);
       elem.bind('mouseup', mouseUp);
 
       function mouseDown(e) {
         if (e.which === 1) {
-          droneService.command(scope.convert[command]);
+          droneService.command(droneService.convert[command]);
           scope.repeat = $interval(function () {
-            droneService.command(scope.convert[command]);
+            droneService.command(droneService.convert[command]);
           }, 300);
         }
       }
@@ -128,26 +97,13 @@
         13: 'enter',
         16: 'shift'
       };
-      scope.convert = {
-        q: 'left',
-        w: 'up',
-        e: 'right',
-        a: 'turnLeft',
-        s: 'down',
-        d: 'turnRight',
-        u: 'flip',
-        h: 'stop',
-        j: 'back',
-        k: 'front',
-        enter: 'takeoff',
-        shift: 'land'
-      };
+      var keyboard = document.getElementsByClassName('keyboard')[0];
       $document.bind('keydown', function (e) {
         var command = scope.keycodes[e.which];
         if (command) {
           var key = document.getElementsByClassName(command)[0];
           key.classList.add('active');
-          droneService.command(scope.convert[command]);
+          droneService.command(droneService.convert[command]);
         }
       });
       $document.bind('keyup', function (e) {
@@ -165,6 +121,27 @@
 (function () {
   'use strict';
 
+  angular.module('ngFlyApp').controller('ChatController', ChatController);
+
+  ChatController.$inject = ['droneService'];
+
+  function ChatController(droneService) {
+    var vm = this;
+    vm.username = droneService.username;
+    vm.message = '';
+    vm.messages = droneService.messages();
+    vm.sendMessage = sendMessage;
+
+    function sendMessage(username, body) {
+      droneService.send(username, body);
+      vm.message = '';
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
   angular.module('ngFlyApp').factory('droneService', droneService);
 
   droneService.$inject = ['socket'];
@@ -172,11 +149,39 @@
   function droneService(socket) {
     var username = generateName();
     var messagesList = [];
+    var convert = {
+      q: 'left',
+      w: 'up',
+      e: 'right',
+      a: 'turn left',
+      s: 'down',
+      d: 'turn right',
+      u: 'flip',
+      h: 'stop',
+      j: 'back',
+      k: 'front',
+      enter: 'takeoff',
+      shift: 'land',
+
+      'L': 'left',
+      'R': 'right',
+      '↑': 'up',
+      '→': 'turn right',
+      '↓': 'down',
+      '←': 'turn left',
+      'X': 'flip',
+      'A': 'front',
+      'B': 'back',
+      'Y': 'stop',
+      'Select': 'land',
+      'Start': 'takeoff'
+    };
     var service = {
       username: username,
       messages: messages,
       command: command,
-      send: send
+      send: send,
+      convert: convert
     };
 
     socket.on('message', function (message) {

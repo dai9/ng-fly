@@ -1,3 +1,7 @@
+@font-face {
+  font-family: 'Exo 2';
+  src: url("../../../assets/fonts/Exo2-Regular.ttf");
+}
 :root {
   box-sizing: border-box;
   font-size: 24px;
@@ -38,7 +42,7 @@ body {
   z-index: 1;
 }
 .header.show {
-  height: 8em;
+  height: 8.5em;
 }
 .header a {
   color: #fff;
@@ -210,6 +214,7 @@ body {
 .keyboard {
   display: -ms-flexbox;
   display: flex;
+  height: 4em;
   -ms-flex-pack: distribute;
       justify-content: space-around;
 }

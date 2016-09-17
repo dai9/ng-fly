@@ -5,6 +5,11 @@ $black: #000;
 $white: #fff;
 $base-font: 24px;
 
+@font-face {
+  font-family: 'Exo 2';
+  src: url('../../../assets/fonts/Exo2-Regular.ttf');
+}
+
 :root {
   box-sizing: border-box;
   font-size: $base-font;
@@ -41,7 +46,7 @@ body {
   transition: height 300ms ease-in-out;
   z-index: 1;
   &.show {
-    height: 8em;
+    height: 8.5em;
   }
   a {
     color: $white;
@@ -213,6 +218,7 @@ body {
 // KEYBOARD
 .keyboard {
   display: flex;
+  height: 4em;
   justify-content: space-around;
   .btn {
     border-bottom: 0.20em solid $tertiary;
