@@ -18,8 +18,9 @@ app.io = io;
 io.on('connection', function(socket) {
   console.log(`${socket.id} has connected.`);
   socket.on('message', function(message) {
-    let command = message.body.toLowerCase();
-    drone.command(command);
+    if (message.isCommand) {
+      drone.command(message.body);
+    }
     io.emit('message', message);
   });
   socket.on('command', function(command) {

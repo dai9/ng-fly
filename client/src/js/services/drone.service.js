@@ -5,9 +5,9 @@
     .module('ngFlyApp')
     .factory('droneService', droneService);
 
-  droneService.$inject = ['socket'];
+  droneService.$inject = ['socket', 'didYouMean'];
 
-  function droneService(socket) {
+  function droneService(socket, didYouMean) {
     let username = generateName();
     let messagesList = [];
     let convert = {
@@ -37,6 +37,7 @@
       'Select': 'land',
       'Start': 'takeoff'
     };
+    let commands = ['left', 'up', 'right', 'turn left', 'down', 'turn right', 'flip', 'stop', 'back', 'front', 'takeoff', 'land'];
     let service = {
       username: username,
       messages: messages,
@@ -61,9 +62,18 @@
       socket.emit('command', command);
     }
     function send(username, body) {
+      let isCommand = false;
+      if (body.length <= 10) {
+        let match = didYouMean.findMatch(body, commands, 1);
+        if (match) {
+          isCommand = true;
+          body = match;
+        }
+      }
       socket.emit('message', {
         username: username,
-        body: body
+        body: body,
+        isCommand: isCommand
       });
     }
 

@@ -142,11 +142,51 @@
 (function () {
   'use strict';
 
+  angular.module('ngFlyApp').factory('didYouMean', didYouMean);
+
+  function didYouMean() {
+    var service = {
+      findMatch: findMatch
+    };
+    return service;
+
+    ////////////
+
+    function findMatch(word, dict, limit) {
+      var minDist = Infinity;
+      var match = null;
+      for (var i = 0; i < dict.length; i++) {
+        var currDist = editDist(word, dict[i]);
+        if (currDist < minDist) {
+          minDist = currDist;
+          match = dict[i];
+        }
+      }
+      console.log(minDist);
+      return minDist <= limit ? match : null;
+    }
+
+    function editDist(a, b) {
+      if (a.length === 0) {
+        return b.length;
+      }
+      if (b.length === 0) {
+        return a.length;
+      }
+      var delta = a.substr(-1) !== b.substr(-1) ? 1 : 0;
+      return Math.min(editDist(a.substr(0, a.length - 1), b.substr(0, b.length - 1)) + delta, editDist(a.substr(0, a.length - 1), b) + 1, editDist(a, b.substr(0, b.length - 1)) + 1);
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
   angular.module('ngFlyApp').factory('droneService', droneService);
 
-  droneService.$inject = ['socket'];
+  droneService.$inject = ['socket', 'didYouMean'];
 
-  function droneService(socket) {
+  function droneService(socket, didYouMean) {
     var username = generateName();
     var messagesList = [];
     var convert = {
@@ -176,6 +216,7 @@
       'Select': 'land',
       'Start': 'takeoff'
     };
+    var commands = ['left', 'up', 'right', 'turn left', 'down', 'turn right', 'flip', 'stop', 'back', 'front', 'takeoff', 'land'];
     var service = {
       username: username,
       messages: messages,
@@ -200,9 +241,18 @@
       socket.emit('command', command);
     }
     function send(username, body) {
+      var isCommand = false;
+      if (body.length <= 10) {
+        var match = didYouMean.findMatch(body, commands, 1);
+        if (match) {
+          isCommand = true;
+          body = match;
+        }
+      }
       socket.emit('message', {
         username: username,
-        body: body
+        body: body,
+        isCommand: isCommand
       });
     }
 
