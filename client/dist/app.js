@@ -36,34 +36,51 @@
 (function () {
   'use strict';
 
+  angular.module('ngFlyApp').controller('ChatController', ChatController);
+
+  ChatController.$inject = ['droneService'];
+
+  function ChatController(droneService) {
+    var vm = this;
+    vm.username = droneService.username;
+    vm.message = '';
+    vm.messages = droneService.messages();
+    vm.sendMessage = sendMessage;
+
+    function sendMessage(username, body) {
+      droneService.send(username, body);
+      vm.message = '';
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
   angular.module('ngFlyApp').directive('btn', btn);
 
-  btn.$inject = ['$interval', '$timeout', 'droneService'];
+  btn.$inject = ['$interval', 'droneService'];
 
-  function btn($interval, $timeout, droneService) {
+  function btn($interval, droneService) {
     return {
       restrict: 'E',
       link: linkFunc
     };
 
     function linkFunc(scope, elem, attrs) {
-
       var command = elem[0].innerHTML;
-      elem.bind('mousedown', mouseDown);
-      elem.bind('mouseup', mouseUp);
+      var promise = void 0;
+      elem.bind('touchstart', touchStart);
+      elem.bind('touchend', touchEnd);
 
-      function mouseDown(e) {
-        if (e.which === 1) {
-          droneService.command(droneService.convert[command]);
-          scope.repeat = $interval(function () {
-            droneService.command(droneService.convert[command]);
-          }, 300);
-        }
+      function touchStart(e) {
+        promise = $interval(longTouch, 300);
       }
-
-      function mouseUp() {
-        droneService.command('stop');
-        $interval.cancel(scope.repeat);
+      function touchEnd(e) {
+        $interval.cancel(promise);
+      }
+      function longTouch() {
+        droneService.command(droneService.convert[command]);
       }
     }
   }
@@ -114,27 +131,6 @@
           key.classList.remove('active');
         }
       });
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('ChatController', ChatController);
-
-  ChatController.$inject = ['droneService'];
-
-  function ChatController(droneService) {
-    var vm = this;
-    vm.username = droneService.username;
-    vm.message = '';
-    vm.messages = droneService.messages();
-    vm.sendMessage = sendMessage;
-
-    function sendMessage(username, body) {
-      droneService.send(username, body);
-      vm.message = '';
     }
   }
 })();
