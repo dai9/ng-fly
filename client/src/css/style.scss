@@ -4,6 +4,8 @@ $tertiary: #7d7d7d;
 $black: #000;
 $white: #fff;
 $base-font: 24px;
+$portrait: "only screen and (max-width: 499px)";
+$landscape: "only screen and (min-width: 500px)";
 
 @font-face {
   font-family: 'Exo 2';
@@ -45,8 +47,10 @@ body {
   right: 0;
   transition: height 300ms ease-in-out;
   z-index: 1;
-  &.show {
-    height: 8.5em;
+  @media #{$portrait} {
+    &.show {
+      height: 8em;
+    }
   }
   a {
     color: $white;
@@ -61,6 +65,15 @@ body {
     list-style-type: none;
     padding: 0;
     text-align:  center;
+    @media #{$landscape} {
+      position: absolute;
+      right: 1rem;
+      top: 0.5rem;
+      li {
+        display: inline;
+        padding-left: 1em;
+      }
+    }
   }
 }
 
@@ -69,6 +82,9 @@ body {
   position: absolute;
   right: 1rem;
   top: 0.5rem;
+  @media #{$landscape} {
+    display: none;
+  }
 }
 
 // CONTENT

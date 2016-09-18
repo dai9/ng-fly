@@ -19,7 +19,7 @@ io.on('connection', function(socket) {
   console.log(`${socket.id} has connected.`);
   socket.on('message', function(message) {
     let command = message.body.toLowerCase();
-    drone.chat(command);
+    drone.command(command);
     io.emit('message', message);
   });
   socket.on('command', function(command) {

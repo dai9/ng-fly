@@ -41,8 +41,10 @@ body {
   transition: height 300ms ease-in-out;
   z-index: 1;
 }
-.header.show {
-  height: 8.5em;
+@media only screen and (max-width: 499px) {
+  .header.show {
+    height: 8em;
+  }
 }
 .header a {
   color: #fff;
@@ -58,12 +60,28 @@ body {
   padding: 0;
   text-align: center;
 }
+@media only screen and (min-width: 500px) {
+  .header ul {
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+  }
+  .header ul li {
+    display: inline;
+    padding-left: 1em;
+  }
+}
 
 .btn.menu {
   font-size: 1.5rem;
   position: absolute;
   right: 1rem;
   top: 0.5rem;
+}
+@media only screen and (min-width: 500px) {
+  .btn.menu {
+    display: none;
+  }
 }
 
 .content {
