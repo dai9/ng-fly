@@ -40,27 +40,6 @@
 (function () {
   'use strict';
 
-  angular.module('ngFlyApp').controller('ChatController', ChatController);
-
-  ChatController.$inject = ['droneService'];
-
-  function ChatController(droneService) {
-    var vm = this;
-    vm.username = droneService.username;
-    vm.message = '';
-    vm.messages = droneService.messages();
-    vm.sendMessage = sendMessage;
-
-    function sendMessage(username, body) {
-      droneService.send(username, body);
-      vm.message = '';
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
   angular.module('ngFlyApp').directive('btn', btn);
 
   btn.$inject = ['$interval', 'droneService'];
@@ -142,6 +121,27 @@
 (function () {
   'use strict';
 
+  angular.module('ngFlyApp').controller('ChatController', ChatController);
+
+  ChatController.$inject = ['droneService'];
+
+  function ChatController(droneService) {
+    var vm = this;
+    vm.username = droneService.username;
+    vm.message = '';
+    vm.messages = droneService.messages();
+    vm.sendMessage = sendMessage;
+
+    function sendMessage(username, body) {
+      droneService.send(username, body);
+      vm.message = '';
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
   angular.module('ngFlyApp').factory('didYouMean', didYouMean);
 
   function didYouMean() {
@@ -162,7 +162,6 @@
           match = dict[i];
         }
       }
-      console.log(minDist);
       return minDist <= limit ? match : null;
     }
 
@@ -189,6 +188,7 @@
   function droneService(socket, didYouMean) {
     var username = generateName();
     var messagesList = [];
+    var path = [];
     var convert = {
       q: 'left',
       w: 'up',
@@ -222,11 +222,16 @@
       messages: messages,
       command: command,
       send: send,
-      convert: convert
+      convert: convert,
+      path: path
     };
 
     socket.on('message', function (message) {
       messagesList.push(message);
+    });
+
+    socket.on('path', function (updatedPath) {
+      console.log(updatedPath);
     });
 
     return service;

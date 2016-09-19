@@ -10,6 +10,7 @@
   function droneService(socket, didYouMean) {
     let username = generateName();
     let messagesList = [];
+    let path = [];
     let convert = {
       q: 'left',
       w: 'up',
@@ -43,11 +44,16 @@
       messages: messages,
       command: command,
       send: send,
-      convert: convert
+      convert: convert,
+      path: path,
     };
 
     socket.on('message', function(message) {
       messagesList.push(message);
+    });
+
+    socket.on('path', function(updatedPath) {
+      console.log(updatedPath);
     });
 
     return service;

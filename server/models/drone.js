@@ -3,9 +3,14 @@ var parrot = new Drone(arDrone);
 
 function Drone(drone) {
   this.drone = drone.createClient();
+  this.path = [];
+  this.airborne = false;
 }
 
 Drone.prototype.command = function(command) {
+  if (this.airborne) {
+    this.path.push(command);
+  }
   switch(command) {
     case 'left':
       console.log('left');
@@ -49,10 +54,12 @@ Drone.prototype.command = function(command) {
       break;
     case 'takeoff':
       console.log('takeoff');
+      this.airborne = true;
       this.drone.takeoff();
       break;
     case 'land':
       console.log('land');
+      this.airborne = false;
       this.drone.land();
       break;
   }
