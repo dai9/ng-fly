@@ -11,7 +11,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 app.io = io;
 
-require('dronestream').listen(server);
+// require('dronestream').listen(server);
 
 // SOCKETS
 
@@ -22,11 +22,11 @@ io.on('connection', function(socket) {
       drone.command(message.body);
     }
     io.emit('message', message);
-    io.emit('path', drone.path);
+    io.emit('pos', drone.pos);
   });
   socket.on('command', function(command) {
     drone.command(command);
-    io.emit('path', drone.path);
+    io.emit('pos', drone.pos);
   });
   socket.on('disconnect', function() {
     console.log(`${socket.id} has disconnected.`);

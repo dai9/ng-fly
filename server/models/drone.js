@@ -3,34 +3,35 @@ var parrot = new Drone(arDrone);
 
 function Drone(drone) {
   this.drone = drone.createClient();
-  this.path = [];
+  this.pos = [0, 0, 0];
   this.airborne = false;
 }
 
 Drone.prototype.command = function(command) {
-  if (this.airborne) {
-    this.path.push(command);
-  }
   switch(command) {
-    case 'left':
-      console.log('left');
-      this.drone.left(0.1);
+    case 'up':
+      console.log('up');
+      this.pos[1] += 1;
+      this.drone.up(0.1);
       break;
     case 'right':
       console.log('right');
+      this.pos[0] += 1;
       this.drone.right(0.1);
       break;
-    case 'up':
-      console.log('up');
-      this.drone.up(0.1);
+    case 'down':
+      console.log('down');
+      this.pos[1] -= 1;
+      this.drone.down(0.1);
+      break;
+    case 'left':
+      console.log('left');
+      this.pos[0] -= 1;
+      this.drone.left(0.1);
       break;
     case 'turn right':
       console.log('turn right');
       this.drone.clockwise(0.1);
-      break;
-    case 'down':
-      console.log('down');
-      this.drone.down(0.1);
       break;
     case 'turn left':
       console.log('turn left');
@@ -38,10 +39,12 @@ Drone.prototype.command = function(command) {
       break;
     case 'front':
       console.log('front');
+      this.pos[2] -= 1;
       this.drone.front(0.1);
       break;
     case 'back':
       console.log('back');
+      this.pos[2] += 1;
       this.drone.stop();
       break;
     case 'flip':

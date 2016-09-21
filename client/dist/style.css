@@ -40,9 +40,9 @@ body {
   width: 100vw;
   z-index: 1;
 }
-@media only screen and (max-width: 499px) {
+@media only screen and (max-width: 549px) {
   .header.show {
-    height: 8em;
+    height: 9em;
   }
 }
 .header a {
@@ -59,7 +59,7 @@ body {
   padding: 0;
   text-align: center;
 }
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 550px) {
   .header ul {
     position: absolute;
     right: 1rem;
@@ -80,7 +80,7 @@ body {
   right: 1rem;
   top: 0.5rem;
 }
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 550px) {
   .btn.menu {
     display: none;
   }

@@ -4,8 +4,8 @@ $tertiary: #7d7d7d;
 $black: #000;
 $white: #fff;
 $base-font: 24px;
-$portrait: "only screen and (max-width: 499px)";
-$landscape: "only screen and (min-width: 500px)";
+$portrait: "only screen and (max-width: 549px)";
+$landscape: "only screen and (min-width: 550px)";
 
 @font-face {
   font-family: 'Exo 2';
@@ -48,7 +48,7 @@ body {
   z-index: 1;
   @media #{$portrait} {
     &.show {
-      height: 8em;
+      height: 9em;
     }
   }
   a {

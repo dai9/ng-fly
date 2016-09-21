@@ -52,10 +52,6 @@
       messagesList.push(message);
     });
 
-    socket.on('path', function(updatedPath) {
-      console.log(updatedPath);
-    });
-
     return service;
 
     ////////////

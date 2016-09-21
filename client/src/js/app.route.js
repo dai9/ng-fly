@@ -18,15 +18,20 @@
       .state('home', {
         url: '/',
         controller: 'ChatController as vm',
-        templateUrl: 'templates/chatroom.html'
+        templateUrl: 'templates/chatroom.html',
       })
       .state('fly', {
         url: '/fly',
-        templateUrl: _isNotMobile ? 'templates/keyboard.html' : 'templates/gamepad.html'
+        templateUrl: _isNotMobile ? 'templates/keyboard.html' : 'templates/gamepad.html',
       })
       .state('stream', {
         url: '/stream',
-        templateUrl: 'templates/stream.html'
+        templateUrl: 'templates/stream.html',
+      })
+      .state('heatmap', {
+        url: '/heatmap',
+        controller: 'HeatMapController as vm',
+        templateUrl: 'templates/heatmap.html',
       });
     $locationProvider.html5Mode(true);
   }

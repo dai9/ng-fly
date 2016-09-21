@@ -1,5 +1,11 @@
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 (function () {
   'use strict';
 
@@ -32,6 +38,10 @@
     }).state('stream', {
       url: '/stream',
       templateUrl: 'templates/stream.html'
+    }).state('heatmap', {
+      url: '/heatmap',
+      controller: 'HeatMapController as vm',
+      templateUrl: 'templates/heatmap.html'
     });
     $locationProvider.html5Mode(true);
   }
@@ -142,6 +152,20 @@
 (function () {
   'use strict';
 
+  angular.module('ngFlyApp').controller('HeatMapController', HeatMapController);
+
+  HeatMapController.$inject = ['heatMapService'];
+
+  function HeatMapController(heatMapService) {
+    var vm = this;
+    vm.renderer = heatMapService.renderer;
+    document.getElementById('heatmap-container').appendChild(vm.renderer.domElement);
+  }
+})();
+
+(function () {
+  'use strict';
+
   angular.module('ngFlyApp').factory('didYouMean', didYouMean);
 
   function didYouMean() {
@@ -230,10 +254,6 @@
       messagesList.push(message);
     });
 
-    socket.on('path', function (updatedPath) {
-      console.log(updatedPath);
-    });
-
     return service;
 
     ////////////
@@ -270,6 +290,70 @@
       }
       return username;
     }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').factory('heatMapService', heatMapService);
+
+  heatMapService.$inject = ['$window', 'socket'];
+
+  function heatMapService($window, socket) {
+    var HeatMapRender = function () {
+      function HeatMapRender() {
+        _classCallCheck(this, HeatMapRender);
+
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.renderer = new THREE.WebGLRenderer();
+        this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+        this.currentPos = [0, 0, 0];
+
+        //config
+        this.renderer.setSize(window.innerWidth * 0.95, window.innerHeight * 0.75);
+        this.controls.target.set(0, 0, 0);
+        this.camera.position.z = 10;
+      }
+
+      _createClass(HeatMapRender, [{
+        key: 'createPoint',
+        value: function createPoint() {
+          var pos = arguments.length <= 0 || arguments[0] === undefined ? this.currentPos : arguments[0];
+          var color = arguments.length <= 1 || arguments[1] === undefined ? 0xff0000 : arguments[1];
+          var size = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+
+          console.log(pos);
+          var geometry = new THREE.Geometry();
+          geometry.vertices.push(new (Function.prototype.bind.apply(THREE.Vector3, [null].concat(_toConsumableArray(pos))))());
+          var material = new THREE.PointsMaterial({ color: color, size: size });
+          var newPoint = new THREE.Points(geometry, material);
+          this.scene.add(newPoint);
+        }
+      }]);
+
+      return HeatMapRender;
+    }();
+
+    var droneHeatMap = new HeatMapRender();
+    function render() {
+      $window.requestAnimationFrame(render);
+      droneHeatMap.renderer.render(droneHeatMap.scene, droneHeatMap.camera);
+    }
+    render();
+
+    socket.on('pos', function (pos) {
+      droneHeatMap.currentPos = pos;
+      droneHeatMap.createPoint();
+    });
+
+    droneHeatMap.createPoint([0, 0, -1]);
+    var service = {
+      renderer: droneHeatMap.renderer
+    };
+
+    return service;
   }
 })();
 
