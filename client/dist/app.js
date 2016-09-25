@@ -28,22 +28,62 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       return !check;
     }();
 
-    $stateProvider.state('home', {
+    $stateProvider.state('fly', {
       url: '/',
-      controller: 'ChatController as vm',
-      templateUrl: 'templates/chatroom.html'
-    }).state('fly', {
-      url: '/fly',
+      controller: 'MainController as vm',
       templateUrl: _isNotMobile ? 'templates/keyboard.html' : 'templates/gamepad.html'
-    }).state('stream', {
-      url: '/stream',
-      templateUrl: 'templates/stream.html'
     }).state('heatmap', {
       url: '/heatmap',
       controller: 'HeatMapController as vm',
       templateUrl: 'templates/heatmap.html'
     });
     $locationProvider.html5Mode(true);
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').controller('ChatController', ChatController);
+
+  ChatController.$inject = ['droneService'];
+
+  function ChatController(droneService) {
+    var vm = this;
+    vm.username = droneService.username;
+    vm.message = '';
+    vm.messages = droneService.messages();
+    vm.sendMessage = sendMessage;
+
+    function sendMessage(username, body) {
+      droneService.send(username, body);
+      vm.message = '';
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').controller('HeatMapController', HeatMapController);
+
+  HeatMapController.$inject = ['heatMapService'];
+
+  function HeatMapController(heatMapService) {
+    var vm = this;
+    vm.renderer = heatMapService.renderer;
+    document.getElementById('heatmap-container').appendChild(vm.renderer.domElement);
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').controller('MainController', MainController);
+
+  function MainController(heatMapService) {
+    var droneDiv = document.getElementById("drone-stream");
+    new NodecopterStream(droneDiv);
   }
 })();
 
@@ -125,41 +165,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
       });
     }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('ChatController', ChatController);
-
-  ChatController.$inject = ['droneService'];
-
-  function ChatController(droneService) {
-    var vm = this;
-    vm.username = droneService.username;
-    vm.message = '';
-    vm.messages = droneService.messages();
-    vm.sendMessage = sendMessage;
-
-    function sendMessage(username, body) {
-      droneService.send(username, body);
-      vm.message = '';
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('HeatMapController', HeatMapController);
-
-  HeatMapController.$inject = ['heatMapService'];
-
-  function HeatMapController(heatMapService) {
-    var vm = this;
-    vm.renderer = heatMapService.renderer;
-    document.getElementById('heatmap-container').appendChild(vm.renderer.domElement);
   }
 })();
 

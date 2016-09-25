@@ -4,7 +4,7 @@
   "main": "server/app.js",
   "private": true,
   "scripts": {
-    "start": "nodemon ./server/bin/www"
+    "start": "nodemon server/app.js"
   },
   "dependencies": {
     "ar-drone": "^0.3.3",

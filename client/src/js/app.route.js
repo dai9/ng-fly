@@ -15,18 +15,10 @@
     })();
 
     $stateProvider
-      .state('home', {
-        url: '/',
-        controller: 'ChatController as vm',
-        templateUrl: 'templates/chatroom.html',
-      })
       .state('fly', {
-        url: '/fly',
+        url: '/',
+        controller: 'MainController as vm',
         templateUrl: _isNotMobile ? 'templates/keyboard.html' : 'templates/gamepad.html',
-      })
-      .state('stream', {
-        url: '/stream',
-        templateUrl: 'templates/stream.html',
       })
       .state('heatmap', {
         url: '/heatmap',

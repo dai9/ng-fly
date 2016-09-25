@@ -4,8 +4,8 @@ $tertiary: #7d7d7d;
 $black: #000;
 $white: #fff;
 $base-font: 24px;
-$portrait: "only screen and (max-width: 549px)";
-$landscape: "only screen and (min-width: 550px)";
+$portrait: "only screen and (max-width: 414px)";
+$landscape: "only screen and (min-width: 415px)";
 
 @font-face {
   font-family: 'Exo 2';
@@ -24,6 +24,7 @@ $landscape: "only screen and (min-width: 550px)";
 }
 
 body {
+  background-color: $secondary;
   display: flex;
   flex-direction: column;
   font-family: 'Exo 2', sans-serif;
@@ -92,8 +93,8 @@ body {
 // CONTENT
 
 .content {
-  background-color: $secondary;
   flex: 1;
+  margin: auto;
   padding: .75rem;
   padding-top: 4rem;
 }

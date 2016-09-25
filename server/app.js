@@ -7,11 +7,8 @@ var bodyParser = require('body-parser');
 var drone = require('./models/drone');
 
 var app = express();
-var server = require('http').Server(app);
+var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-app.io = io;
-
-// require('dronestream').listen(server);
 
 // SOCKETS
 
@@ -49,4 +46,7 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
-module.exports = app;
+require('dronestream').listen(server);
+server.listen(3000);
+
+module.exports = server;

@@ -17,6 +17,7 @@
 }
 
 body {
+  background-color: #f8fbfd;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
@@ -40,7 +41,7 @@ body {
   width: 100vw;
   z-index: 1;
 }
-@media only screen and (max-width: 549px) {
+@media only screen and (max-width: 414px) {
   .header.show {
     height: 9em;
   }
@@ -59,7 +60,7 @@ body {
   padding: 0;
   text-align: center;
 }
-@media only screen and (min-width: 550px) {
+@media only screen and (min-width: 415px) {
   .header ul {
     position: absolute;
     right: 1rem;
@@ -80,16 +81,16 @@ body {
   right: 1rem;
   top: 0.5rem;
 }
-@media only screen and (min-width: 550px) {
+@media only screen and (min-width: 415px) {
   .btn.menu {
     display: none;
   }
 }
 
 .content {
-  background-color: #f8fbfd;
   -ms-flex: 1;
       flex: 1;
+  margin: auto;
   padding: .75rem;
   padding-top: 4rem;
 }
