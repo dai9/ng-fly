@@ -306,3 +306,11 @@ body {
   top: 1.6em;
   width: 3em;
 }
+
+#drone-stream canvas {
+  border: 0.3em solid #0c0c3c;
+  border-radius: 0.5em;
+  height: 100%;
+  margin-bottom: 1em;
+  width: 100%;
+}

@@ -307,3 +307,12 @@ body {
     }
   }
 }
+
+// STREAM
+#drone-stream canvas {
+  border: 0.3em solid $primary;
+  border-radius: 0.5em;
+  height: 100%;
+  margin-bottom: 1em;
+  width: 100%;
+}

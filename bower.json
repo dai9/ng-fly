@@ -21,6 +21,7 @@
     "normalize-css": "^4.2.0",
     "angular-socket-io": "^0.7.0",
     "angular-scroll-glue": "^2.0.7",
-    "three.js": "threejs#*"
+    "three.js": "threejs#*",
+    "tracking": "^1.1.2"
   }
 }
