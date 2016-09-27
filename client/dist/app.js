@@ -44,66 +44,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function () {
   'use strict';
 
-  angular.module('ngFlyApp').controller('ChatController', ChatController);
-
-  ChatController.$inject = ['droneService'];
-
-  function ChatController(droneService) {
-    var vm = this;
-    vm.username = droneService.username;
-    vm.message = '';
-    vm.messages = droneService.messages();
-    vm.sendMessage = sendMessage;
-
-    function sendMessage(username, body) {
-      droneService.send(username, body);
-      vm.message = '';
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('HeatMapController', HeatMapController);
-
-  HeatMapController.$inject = ['heatMapService'];
-
-  function HeatMapController(heatMapService) {
-    var vm = this;
-    vm.renderer = heatMapService.renderer;
-    document.getElementById('heatmap-container').appendChild(vm.renderer.domElement);
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('MainController', MainController);
-
-  function MainController(heatMapService) {
-    var droneDiv = document.getElementById("drone-stream");
-    new NodecopterStream(droneDiv);
-
-    var colors = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
-    colors.on('track', function (event) {
-      if (event.data.length === 0) {
-        console.log('no colors detected');
-      } else {
-        event.data.forEach(function (rect) {
-          console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
-        });
-      }
-    });
-
-    var canvas = document.querySelector('#drone-stream canvas');
-    tracking.track(canvas, colors);
-  }
-})();
-
-(function () {
-  'use strict';
-
   angular.module('ngFlyApp').directive('btn', btn);
 
   btn.$inject = ['$interval', 'droneService'];
@@ -185,6 +125,65 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function () {
   'use strict';
 
+  angular.module('ngFlyApp').controller('ChatController', ChatController);
+
+  ChatController.$inject = ['droneService'];
+
+  function ChatController(droneService) {
+    var vm = this;
+    vm.username = droneService.username;
+    vm.message = '';
+    vm.messages = droneService.messages();
+    vm.sendMessage = sendMessage;
+
+    function sendMessage(username, body) {
+      droneService.send(username, body);
+      vm.message = '';
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').controller('HeatMapController', HeatMapController);
+
+  HeatMapController.$inject = ['heatMapService'];
+
+  function HeatMapController(heatMapService) {
+    var vm = this;
+    vm.renderer = heatMapService.renderer;
+    document.getElementById('heatmap-container').appendChild(vm.renderer.domElement);
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').controller('MainController', MainController);
+
+  function MainController(heatMapService) {
+    var droneDiv = document.getElementById("drone-stream");
+    new NodecopterStream(droneDiv);
+    var counter = 0;
+
+    var downloadLink = document.getElementById('download');
+    downloadLink.addEventListener('click', function () {
+      counter++;
+      downloadCanvas(this, 'dronesnap' + counter + '.png');
+    }, false);
+
+    function downloadCanvas(link, filename) {
+      var canvas = document.querySelector('#drone-stream canvas');
+      link.href = canvas.toDataURL();
+      link.download = filename;
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
   angular.module('ngFlyApp').factory('didYouMean', didYouMean);
 
   function didYouMean() {
@@ -229,7 +228,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   droneService.$inject = ['socket', 'didYouMean'];
 
   function droneService(socket, didYouMean) {
-    var username = generateName();
+    var username = generateId();
     var messagesList = [];
     var path = [];
     var convert = {
@@ -239,7 +238,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       a: 'turn left',
       s: 'down',
       d: 'turn right',
-      u: 'flip',
+      u: 'order66',
       h: 'stop',
       j: 'back',
       k: 'front',
@@ -252,14 +251,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       '→': 'turn right',
       '↓': 'down',
       '←': 'turn left',
-      'X': 'flip',
+      'X': 'order66',
       'A': 'front',
       'B': 'back',
       'Y': 'stop',
       'Select': 'land',
       'Start': 'takeoff'
     };
-    var commands = ['left', 'up', 'right', 'turn left', 'down', 'turn right', 'flip', 'stop', 'back', 'front', 'takeoff', 'land'];
+    var commands = ['left', 'up', 'right', 'turn left', 'down', 'turn right', 'order66', 'stop', 'back', 'front', 'takeoff', 'land'];
     var service = {
       username: username,
       messages: messages,
@@ -284,6 +283,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     function command(command) {
       socket.emit('command', command);
     }
+
     function send(username, body) {
       var isCommand = false;
       if (body.length <= 10) {
@@ -300,7 +300,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       });
     }
 
-    function generateName() {
+    function generateId() {
       var length = arguments.length <= 0 || arguments[0] === undefined ? 4 : arguments[0];
 
       var username = 'Guest#';

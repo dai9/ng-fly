@@ -45,11 +45,7 @@ Drone.prototype.command = function(command) {
     case 'back':
       console.log('back');
       this.pos[2] += 1;
-      this.drone.stop();
-      break;
-    case 'flip':
-      console.log('flip');
-      this.drone.front(0.1);
+      this.drone.back(0.1);
       break;
     case 'stop':
       console.log('stop');
@@ -65,6 +61,30 @@ Drone.prototype.command = function(command) {
       this.airborne = false;
       this.drone.land();
       break;
+    case 'order66':
+      console.log('execute order 66');
+      let client = this.drone;
+      client.takeoff();
+      client
+        .after(500, function() {
+          this.stop();
+        })
+        .after(1000, function() {
+          this.front(0.1);
+        })
+        .after(1000, function() {
+          this.back(0.1);
+        })
+        .after(500, function() {
+          this.stop();
+        })
+        .after(500, function() {
+          this.animate('flipLeft', 15);
+        })
+        .after(500, function() {
+          this.stop();
+          this.land();
+        });
   }
 };
 

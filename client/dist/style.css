@@ -43,7 +43,7 @@ body {
 }
 @media only screen and (max-width: 414px) {
   .header.show {
-    height: 9em;
+    height: 7em;
   }
 }
 .header a {

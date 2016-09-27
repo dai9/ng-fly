@@ -49,7 +49,7 @@ body {
   z-index: 1;
   @media #{$portrait} {
     &.show {
-      height: 9em;
+      height: 7em;
     }
   }
   a {

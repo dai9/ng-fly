@@ -8,7 +8,7 @@
   droneService.$inject = ['socket', 'didYouMean'];
 
   function droneService(socket, didYouMean) {
-    let username = generateName();
+    let username = generateId();
     let messagesList = [];
     let path = [];
     let convert = {
@@ -18,7 +18,7 @@
       a: 'turn left',
       s: 'down',
       d: 'turn right',
-      u: 'flip',
+      u: 'order66',
       h: 'stop',
       j: 'back',
       k: 'front',
@@ -31,14 +31,14 @@
       '→': 'turn right',
       '↓': 'down',
       '←': 'turn left',
-      'X': 'flip',
+      'X': 'order66',
       'A': 'front',
       'B': 'back',
       'Y': 'stop',
       'Select': 'land',
       'Start': 'takeoff'
     };
-    let commands = ['left', 'up', 'right', 'turn left', 'down', 'turn right', 'flip', 'stop', 'back', 'front', 'takeoff', 'land'];
+    let commands = ['left', 'up', 'right', 'turn left', 'down', 'turn right', 'order66', 'stop', 'back', 'front', 'takeoff', 'land'];
     let service = {
       username: username,
       messages: messages,
@@ -63,6 +63,7 @@
     function command(command) {
       socket.emit('command', command);
     }
+
     function send(username, body) {
       let isCommand = false;
       if (body.length <= 10) {
@@ -79,7 +80,7 @@
       });
     }
 
-    function generateName(length = 4) {
+    function generateId(length = 4) {
       let username = 'Guest#';
       for (let i = 0; i < length; i++) {
         username += Math.floor(Math.random() * 10);
