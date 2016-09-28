@@ -308,9 +308,13 @@ body {
 }
 
 #drone-stream canvas {
+  display: none;
+}
+
+#drone-mirror {
   border: 0.3em solid #0c0c3c;
   border-radius: 0.5em;
-  height: 100%;
+  height: 360px;
   margin-bottom: 1em;
-  width: 100%;
+  width: 640px;
 }

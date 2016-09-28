@@ -44,6 +44,80 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function () {
   'use strict';
 
+  angular.module('ngFlyApp').controller('ChatController', ChatController);
+
+  ChatController.$inject = ['droneService'];
+
+  function ChatController(droneService) {
+    var vm = this;
+    vm.username = droneService.username;
+    vm.message = '';
+    vm.messages = droneService.messages();
+    vm.sendMessage = sendMessage;
+
+    function sendMessage(username, body) {
+      droneService.send(username, body);
+      vm.message = '';
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').controller('HeatMapController', HeatMapController);
+
+  HeatMapController.$inject = ['heatMapService'];
+
+  function HeatMapController(heatMapService) {
+    var vm = this;
+    vm.renderer = heatMapService.renderer;
+    document.getElementById('heatmap-container').appendChild(vm.renderer.domElement);
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ngFlyApp').controller('MainController', MainController);
+
+  MainController.$inject = ['$scope', '$interval'];
+
+  function MainController($scope, $interval) {
+    var droneDiv = document.getElementById("drone-stream");
+    new NodecopterStream(droneDiv);
+    var streamCanvas = document.querySelector('#drone-stream canvas');
+    var mirrorCanvas = document.getElementById('drone-mirror');
+    var mirrorCtx = mirrorCanvas.getContext('2d');
+    var savedData = new Image();
+
+    var face = new tracking.ObjectTracker('face');
+    face.setInitialScale(4);
+    face.setStepSize(2);
+    face.setEdgesDensity(0.1);
+
+    function render() {
+      mirrorCtx.clearRect(0, 0, mirrorCanvas.width, mirrorCanvas.height);
+      savedData.src = streamCanvas.toDataURL('image/png');
+      mirrorCtx.drawImage(savedData, 0, 0);
+      tracking.track('#drone-mirror', face);
+
+      face.on('track', function (event) {
+        $scope.lastFacePos = event.data;
+        event.data.forEach(function (rect) {
+          mirrorCtx.strokeStyle = '#a64ceb';
+          mirrorCtx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        });
+      });
+      window.requestAnimationFrame(render);
+    }
+    render();
+  }
+})();
+
+(function () {
+  'use strict';
+
   angular.module('ngFlyApp').directive('btn', btn);
 
   btn.$inject = ['$interval', 'droneService'];
@@ -118,65 +192,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           key.classList.remove('active');
         }
       });
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('ChatController', ChatController);
-
-  ChatController.$inject = ['droneService'];
-
-  function ChatController(droneService) {
-    var vm = this;
-    vm.username = droneService.username;
-    vm.message = '';
-    vm.messages = droneService.messages();
-    vm.sendMessage = sendMessage;
-
-    function sendMessage(username, body) {
-      droneService.send(username, body);
-      vm.message = '';
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('HeatMapController', HeatMapController);
-
-  HeatMapController.$inject = ['heatMapService'];
-
-  function HeatMapController(heatMapService) {
-    var vm = this;
-    vm.renderer = heatMapService.renderer;
-    document.getElementById('heatmap-container').appendChild(vm.renderer.domElement);
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ngFlyApp').controller('MainController', MainController);
-
-  function MainController(heatMapService) {
-    var droneDiv = document.getElementById("drone-stream");
-    new NodecopterStream(droneDiv);
-    var counter = 0;
-
-    var downloadLink = document.getElementById('download');
-    downloadLink.addEventListener('click', function () {
-      counter++;
-      downloadCanvas(this, 'dronesnap' + counter + '.png');
-    }, false);
-
-    function downloadCanvas(link, filename) {
-      var canvas = document.querySelector('#drone-stream canvas');
-      link.href = canvas.toDataURL();
-      link.download = filename;
     }
   }
 })();

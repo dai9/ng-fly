@@ -62,29 +62,32 @@ Drone.prototype.command = function(command) {
       this.drone.land();
       break;
     case 'order66':
-      console.log('execute order 66');
-      let client = this.drone;
-      client.takeoff();
-      client
-        .after(500, function() {
-          this.stop();
-        })
-        .after(1000, function() {
-          this.front(0.1);
-        })
-        .after(1000, function() {
-          this.back(0.1);
-        })
-        .after(500, function() {
-          this.stop();
-        })
-        .after(500, function() {
-          this.animate('flipLeft', 15);
-        })
-        .after(500, function() {
-          this.stop();
-          this.land();
-        });
+      this.drone.animate('flipLeft');
+    // case 'order66':
+    //   console.log('execute order 66');
+    //   let client = this.drone;
+    //   client.takeoff();
+    //   client
+    //     .after(500, function() {
+    //       this.stop();
+    //     })
+    //     .after(1000, function() {
+    //       this.front(0.1);
+    //     })
+    //     .after(1000, function() {
+    //       this.back(0.1);
+    //     })
+    //     .after(500, function() {
+    //       this.stop();
+    //       this.up(0.1);
+    //     })
+    //     .after(2000, function() {
+    //       this.animate('flipLeft', 15);
+    //     })
+    //     .after(500, function() {
+    //       this.stop();
+    //       this.land();
+    //     });
   }
 };
 
