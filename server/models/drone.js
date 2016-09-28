@@ -62,33 +62,48 @@ Drone.prototype.command = function(command) {
       this.drone.land();
       break;
     case 'order66':
-      this.drone.animate('flipLeft');
-    // case 'order66':
-    //   console.log('execute order 66');
-    //   let client = this.drone;
-    //   client.takeoff();
-    //   client
-    //     .after(500, function() {
-    //       this.stop();
-    //     })
-    //     .after(1000, function() {
-    //       this.front(0.1);
-    //     })
-    //     .after(1000, function() {
-    //       this.back(0.1);
-    //     })
-    //     .after(500, function() {
-    //       this.stop();
-    //       this.up(0.1);
-    //     })
-    //     .after(2000, function() {
-    //       this.animate('flipLeft', 15);
-    //     })
-    //     .after(500, function() {
-    //       this.stop();
-    //       this.land();
-    //     });
+      console.log('execute order 66');
+      let client = this.drone;
+      client.takeoff();
+      client
+        .after(500, function() {
+          this.stop();
+        })
+        .after(1000, function() {
+          this.front(0.1);
+        })
+        .after(1000, function() {
+          this.back(0.1);
+        })
+        .after(500, function() {
+          this.stop();
+          this.up(0.1);
+        })
+        .after(2000, function() {
+          this.animate('flipLeft', 15);
+        })
+        .after(500, function() {
+          this.stop();
+          this.land();
+        });
   }
+};
+
+Drone.prototype.centerFace = function(x, y) {
+  if (x < 20) {
+    console.log(`Face detected at x=${x} is far left. Adjusting drone to the left.`);
+    this.drone.left(0.3);
+  } else if (x > 170) {
+    console.log(`Face detected at x=${x} is far right. Adjusting drone to the right.`);
+    this.drone.right(0.3);
+  } else if (y < 10) {
+    console.log(`Face detected at y=${y} is far up. Adjusting drone up.`);
+    this.drone.up(0.3);
+  } else if (y > 30) {
+    console.log(`Face detected at y=${y} is far down. Adjusting drone down.`);
+    this.drone.down(0.3);
+  }
+  this.drone.stop();
 };
 
 module.exports = parrot;

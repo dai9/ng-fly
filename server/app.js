@@ -25,6 +25,12 @@ io.on('connection', function(socket) {
     drone.command(command);
     io.emit('pos', drone.pos);
   });
+  socket.on('faceDetected', function(coords) {
+    drone.centerFace(coords.x, coords.y);
+    if (coords.x < 10 || coords.x > 180 || coords.y < 5 || coords.y > 35) {
+      socket.emit('nearEdge', {x: coords.x, y: coords.y});
+    }
+  });
   socket.on('disconnect', function() {
     console.log(`${socket.id} has disconnected.`);
   });

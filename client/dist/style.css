@@ -311,7 +311,7 @@ body {
   display: none;
 }
 
-#drone-mirror {
+#drone-mirror, #arrows-canvas {
   border: 0.3em solid #0c0c3c;
   border-radius: 0.5em;
   height: 360px;
